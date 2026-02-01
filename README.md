@@ -1,7 +1,3 @@
-To impress a team like Ophelia, your README needs to bridge the gap between "I can code" and "I understand the mission". It should be clean, professional, and highlight the why behind your technical choices.
-
-Here is a human-centric, high-impact README draft for your GitHub.
-
 Ophelia "Tiny Slice" MVP – Patient Triage System
 The Context
 I noticed Ophelia uses TypeScript, React, and Firebase to power their telehealth platform. To demonstrate my technical alignment and product-mindedness, I spent a weekend building a functional "slice" of a clinical triage flow.
