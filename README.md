@@ -1,46 +1,129 @@
-**Ophelia "Tiny Slice" MVP – Patient Triage System**
+# Follow-Up Adherence & Side-Effect Tracker
 
-**The Context**
-I noticed Ophelia uses TypeScript, React, and Firebase to power their telehealth platform. To demonstrate my technical alignment and product-mindedness, I spent a weekend building a functional "slice" of a clinical triage flow.
+A tiny, focused telehealth tool for tracking how patients are doing *between* visits: cravings, withdrawal symptoms, side effects, and missed doses. Built to mirror a real workflow a clinician at Ophelia might use to triage patients after check-ins. [web:22][web:24][web:30][web:32]
 
-The goal of this MVP is to show how real-time data can be used to identify high-risk patients in an Opioid Use Disorder (OUD) treatment context, ensuring clinicians can prioritize care where it’s needed most.
+---
 
-🛠️ Tech Stack & Architecture
-Framework: Next.js 14 (App Router)
+## 1. Problem
 
-Language: TypeScript (Strictly typed interfaces for all data models)
+Patients in treatment for opioid use disorder have a lot happening between visits: cravings, withdrawal, side effects, and life issues that can affect whether they take their meds or drop out of care. [web:22][web:29][web:30]
 
-Backend-as-a-Service: Firebase (Auth & Firestore)
+Clinicians need a simple way to:
 
-Styling: Tailwind CSS
+- See who is struggling **right now**
+- Catch missed doses and severe symptoms early
+- Focus their time on the **highest-risk** patients first [web:22][web:29]
 
-✨ Key Features
-Role-Based Access (RBAC): Distinct flows for Patients (check-in submission) and Clinicians (triage dashboard).
+Most generic dashboards don’t reflect this reality. They show data, but don’t help answer the key question: *“Who should I reach out to first today?”* [web:22][web:30]
 
-Real-Time Triage: The Clinician Dashboard uses Firestore onSnapshot listeners to surface high-risk check-ins the moment they are submitted.
+---
 
-Clinical Risk Logic: Automatic risk calculation (Low/Medium/High) based on cravings, withdrawal severity, and medication adherence.
+## 2. Solution
 
-Security-First Data: Implemented Firestore Security Rules to ensure patients can only access their own records, while clinicians have read access to the triage board.
+This project is a small, opinionated slice of that workflow:
 
-🧠 Technical Decisions & Trade-offs
-1. Why NoSQL (Firestore)?
-I chose Firestore over a relational database specifically for its Real-Time SDK. In a telehealth environment, a delay in seeing a "High Risk" alert could have real-world consequences. Firestore allows for an event-driven UI that updates the clinician's board without a page refresh.
+### Patient flow
 
-2. Schema Denormalization
-To optimize for dashboard performance, I denormalized the patientName into each checkIn document. This avoids expensive client-side "joins" or multiple round-trips to the users collection, allowing the triage board to stay snappy even as data grows.
+- Sign up / sign in as a **patient**
+- Fill out a daily follow-up check-in:
+  - Cravings level (1–5)
+  - Withdrawal symptoms (1–5)
+  - Side effects (1–5)
+  - Missed doses (number)
+  - Optional note to the care team
+- On submit, the app:
+  - Calculates a risk level (Low / Medium / High)
+  - Stores the check-in in Firestore
+  - Shows a confirmation that the care team received it
 
-3. Handling Async Race Conditions
-I implemented a nested observer pattern to synchronize Firebase Auth state with Firestore listeners. This ensures the app only attempts to fetch clinical data after a valid session is verified, preventing permission errors during the initial mount.
+### Clinician flow
 
-⚠️ Important Note for Reviewers
-For the scope of this weekend MVP, roles are self-assigned during signup. In a production environment, I would move this to a Server-Side Admin SDK using Firebase Custom Claims to ensure the "Clinician" role cannot be spoofed by a client-side request.
+- Sign up / sign in as a **clinician**
+- See a dashboard of recent patient check-ins:
+  - Sorted by **risk level** first (High → Medium → Low), then by time
+  - Each card/row shows:
+    - Patient label
+    - Cravings and missed doses
+    - A clear risk badge (color + text)
+- Click into a check-in to see details:
+  - All scores
+  - Notes
+  - A short explanation of **why** the check-in was flagged as High/Medium risk
 
-🚀 Getting Started
-Clone the repo.
+The goal isn’t to be a full EHR or full Ophelia clone. It’s a focused MVP to show:
 
-Add your Firebase config to a .env.local (see .env.example).
+- I understand the workflows around telehealth OUD follow-up and retention
+- I can scope and ship a real product slice end-to-end, not just a generic CRUD app [web:22][web:24][web:30][web:32]
 
-npm install and npm run dev.
+---
 
-Sign up as a Patient to submit a check-in, then sign up as a Clinician to view the triage board.
+## 3. Risk Scoring
+
+Risk is computed on the client when a patient submits a check-in.
+
+### Inputs
+
+- `cravings` (1–5)
+- `withdrawalSeverity` (1–5)
+- `sideEffectsSeverity` (1–5)
+- `missedDoses` (integer)
+- Optional note
+
+Each condition also adds a human-readable reason, for example:
+
+- “High cravings”
+- “Severe withdrawal symptoms”
+- “Multiple missed doses”
+
+These reasons are shown on the clinician detail page so it’s clear why a check-in is flagged.
+
+---
+
+## 4. Tech Stack
+
+This project is aligned with Ophelia’s stack for the Software Engineer I role. [web:24][web:26][web:31][web:32]
+
+- **Frontend:** Next.js (App Router), React, TypeScript
+- **Auth:** Firebase Authentication (email/password)
+- **Database:** Firestore
+- **Hosting:** Vercel (easy to move to Firebase Hosting or GCP later)
+- **Styling:** Tailwind CSS / simple custom CSS (kept minimal on purpose)
+
+Project structure (high-level):
+
+- `app/`
+  - `page.tsx` – landing / basic routing
+  - `check-in/page.tsx` – patient check-in page
+  - `clinician/dashboard/page.tsx` – clinician dashboard
+  - `clinician/check-in/[id]/page.tsx` – check-in detail view
+  - `login/page.tsx` - login and signup
+  - `lib/`
+    - `firebase.ts` – Firebase init (Auth + Firestore)
+  - `utils/`
+    - `riskCalculator.ts`
+  - `components/`
+    - `CheckInForm.tsx`
+
+---
+
+## 5. Notes and Future Ideas
+
+This is intentionally a small, weekend-sized MVP focused on one critical workflow: follow-up adherence and side-effect tracking in telehealth OUD care. [web:22][web:29]
+
+If I extend this, I’d like to explore:
+
+Longitudinal trends for each patient (cravings and adherence over time)
+
+Better role-based access control and stricter Firestore security rules
+
+Simple “reach out” workflows for clinicians (documenting calls, messages, or follow-up actions)
+
+More nuanced scoring aligned with clinical guidelines
+
+For now, the goal was to ship a clear, working slice that shows:
+
+Strong alignment with Ophelia’s tech stack
+
+Product thinking around telehealth OUD workflows
+
+Ability to independently design, build, and deploy an MVP end-to-end [web:22][web:24][web:30][web:32]
