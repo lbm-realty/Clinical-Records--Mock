@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+To impress a team like Ophelia, your README needs to bridge the gap between "I can code" and "I understand the mission". It should be clean, professional, and highlight the why behind your technical choices.
 
-## Getting Started
+Here is a human-centric, high-impact README draft for your GitHub.
 
-First, run the development server:
+Ophelia "Tiny Slice" MVP – Patient Triage System
+The Context
+I noticed Ophelia uses TypeScript, React, and Firebase to power their telehealth platform. To demonstrate my technical alignment and product-mindedness, I spent a weekend building a functional "slice" of a clinical triage flow.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The goal of this MVP is to show how real-time data can be used to identify high-risk patients in an Opioid Use Disorder (OUD) treatment context, ensuring clinicians can prioritize care where it’s needed most.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🛠️ Tech Stack & Architecture
+Framework: Next.js 14 (App Router)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Language: TypeScript (Strictly typed interfaces for all data models)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Backend-as-a-Service: Firebase (Auth & Firestore)
 
-## Learn More
+Styling: Tailwind CSS
 
-To learn more about Next.js, take a look at the following resources:
+✨ Key Features
+Role-Based Access (RBAC): Distinct flows for Patients (check-in submission) and Clinicians (triage dashboard).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Real-Time Triage: The Clinician Dashboard uses Firestore onSnapshot listeners to surface high-risk check-ins the moment they are submitted.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Clinical Risk Logic: Automatic risk calculation (Low/Medium/High) based on cravings, withdrawal severity, and medication adherence.
 
-## Deploy on Vercel
+Security-First Data: Implemented Firestore Security Rules to ensure patients can only access their own records, while clinicians have read access to the triage board.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+🧠 Technical Decisions & Trade-offs
+1. Why NoSQL (Firestore)?
+I chose Firestore over a relational database specifically for its Real-Time SDK. In a telehealth environment, a delay in seeing a "High Risk" alert could have real-world consequences. Firestore allows for an event-driven UI that updates the clinician's board without a page refresh.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Schema Denormalization
+To optimize for dashboard performance, I denormalized the patientName into each checkIn document. This avoids expensive client-side "joins" or multiple round-trips to the users collection, allowing the triage board to stay snappy even as data grows.
+
+3. Handling Async Race Conditions
+I implemented a nested observer pattern to synchronize Firebase Auth state with Firestore listeners. This ensures the app only attempts to fetch clinical data after a valid session is verified, preventing permission errors during the initial mount.
+
+⚠️ Important Note for Reviewers
+For the scope of this weekend MVP, roles are self-assigned during signup. In a production environment, I would move this to a Server-Side Admin SDK using Firebase Custom Claims to ensure the "Clinician" role cannot be spoofed by a client-side request.
+
+🚀 Getting Started
+Clone the repo.
+
+Add your Firebase config to a .env.local (see .env.example).
+
+npm install and npm run dev.
+
+Sign up as a Patient to submit a check-in, then sign up as a Clinician to view the triage board.
