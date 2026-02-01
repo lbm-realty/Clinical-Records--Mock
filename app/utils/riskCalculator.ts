@@ -1,8 +1,8 @@
 import { RiskLevel } from "../types";
 
 interface RiskInput {
-  cravings: number;
-  withdrawal: number;
+  cravingsLevel: number;
+  withdrawalSeverity: number;
   missedDoses: number;
 }
 
@@ -11,12 +11,12 @@ export function calculateRisk(input: RiskInput): { level: RiskLevel; reasons: st
   let level: RiskLevel = 'low';
 
   // Ophelia-style logic: prioritize safety
-  if (input.cravings >= 4) {
+  if (input.cravingsLevel >= 4) {
     level = 'high';
     reasons.push('Severe Cravings');
   }
   
-  if (input.withdrawal >= 4) {
+  if (input.withdrawalSeverity >= 4) {
     level = 'high';
     reasons.push('Severe Withdrawal Symptoms');
   }
@@ -28,7 +28,7 @@ export function calculateRisk(input: RiskInput): { level: RiskLevel; reasons: st
 
   // Fallback to medium if high criteria aren't met but some concern exists
   if (level !== 'high') {
-    if (input.cravings === 3 || input.withdrawal === 3 || input.missedDoses === 1) {
+    if (input.cravingsLevel === 3 || input.withdrawalSeverity === 3 || input.missedDoses === 1) {
       level = 'medium';
       reasons.push('Moderate Symptoms/Adherence Issues');
     }

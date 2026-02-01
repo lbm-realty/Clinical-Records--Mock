@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type RiskLevel = 'low' | 'medium' | 'high';
 
 export interface Patient {
@@ -12,7 +14,7 @@ export interface CheckIn {
   id: string; // Firestore Document ID
   patientId: string;
   patientName: string; // Denormalized for easier display on dashboard
-  createdAt: number; // Store as timestamp (Date.now()) for easier sorting
+  createdAt: Timestamp; // Store as timestamp (Date.now()) for easier sorting
   
   // Clinical Data
   cravingsLevel: number; // 1-5
