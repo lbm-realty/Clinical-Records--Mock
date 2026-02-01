@@ -1,5 +1,6 @@
-Ophelia "Tiny Slice" MVP – Patient Triage System
-The Context
+**Ophelia "Tiny Slice" MVP – Patient Triage System**
+
+**The Context**
 I noticed Ophelia uses TypeScript, React, and Firebase to power their telehealth platform. To demonstrate my technical alignment and product-mindedness, I spent a weekend building a functional "slice" of a clinical triage flow.
 
 The goal of this MVP is to show how real-time data can be used to identify high-risk patients in an Opioid Use Disorder (OUD) treatment context, ensuring clinicians can prioritize care where it’s needed most.
