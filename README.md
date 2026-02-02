@@ -106,9 +106,15 @@ Project structure (high-level):
 
 ---
 
-## 5. Notes and Future Ideas
+## 5. Future Ideas and What's not included
 
 This is intentionally a small, weekend-sized MVP focused on one critical workflow: follow-up adherence and side-effect tracking in telehealth OUD care. [web:22][web:29]
+
+#What's not included:
+  - Email verification for general users
+  - Email verification for clinicians, as in a real setting, it'd be managed by admins
+  - Things like risk calculations are currently on client side, but in prod, these would be handled by Firebase Cloud 
+
 
 If I extend this, I’d like to explore:
 
