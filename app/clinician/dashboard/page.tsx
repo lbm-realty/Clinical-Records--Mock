@@ -11,40 +11,13 @@ import { useRouter } from "next/navigation";
 export default function ClinicianDashboard() {
   const [checkIns, setCheckIns] = useState<CheckIn[]>([]);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
   const [authLoading, setAuthLoading] = useState(true);
   const router = useRouter();
-
-  //   useEffect(() => {
-  //     // Real-time listener for incoming patient data
-
-  //     const unsubscribe = auth.onAuthStateChanged((user) => {
-  //         if (user) {
-  //             setUser(user);
-  //             setAuthLoading(false);
-  //         } else {
-  //             router.push('/login'); // Kick them out if not logged in
-  //         }
-
-  //         const q = query(collection(db, 'checkIns'), orderBy('createdAt', 'desc'));
-  //         const unsubscribeData = onSnapshot(q, (snapshot) => {
-  //         const docs = snapshot.docs.map(doc => ({
-  //           id: doc.id,
-  //           ...doc.data()
-  //         } as CheckIn));
-
-  //         setCheckIns(docs);
-  //         setLoading(false);
-  //         }, (error) => {
-  //             console.error("Firestore Error:", error);
-  //             setLoading(false);
-  //         });
-
-  //         return () => unsubscribeData();
-  //     });
-
-  //     return () => unsubscribe();
-  //   }, []);
+  const RISK_ORDER = {
+    "high": 3,
+    "medium": 2,
+    "low": 1
+  };
 
   useEffect(() => {
     // 1. Listen for Auth State
@@ -69,7 +42,8 @@ export default function ClinicianDashboard() {
               }) as CheckIn,
           );
 
-          setCheckIns(docs);
+          const sortedData = sortData(docs);
+          setCheckIns(sortedData);
           setLoading(false);
         },
         (error) => {
@@ -85,6 +59,17 @@ export default function ClinicianDashboard() {
 
     return () => unsubscribeAuth();
   }, [router]);
+
+  const sortData = (data: CheckIn[]) => { 
+    const sortedData = [...data].sort((a, b) => {
+  // Fallback to 0 if riskLevel is undefined or doesn't match
+    const weightA = RISK_ORDER[a.riskLevel] || 0;
+    const weightB = RISK_ORDER[b.riskLevel] || 0;
+    return weightB - weightA; // Descending order: High -> Medium -> Low
+    });
+
+    return sortedData;
+  }
 
   if (authLoading)
     return <div className="p-10 text-center">Verifying credentials...</div>;

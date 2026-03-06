@@ -18,10 +18,10 @@ export default function LandingPage() {
       <main className="max-w-7xl mx-auto px-6 py-20 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <h1 className="text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight mb-6">
-            Bridging the gap in <span className="text-blue-600">OUD Recovery.</span>
+            Bridging the gap in <span className="text-blue-600">Health Recovery.</span>
           </h1>
           <p className="text-lg text-slate-600 mb-10 leading-relaxed max-w-xl">
-            A specialized clinical triage platform designed to help Ophelia clinicians monitor patient stability, withdrawal symptoms, and medication adherence in real-time.
+            A specialized clinical triage platform designed to help clinicians monitor patient stability, withdrawal symptoms, and medication adherence in real-time.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
@@ -32,7 +32,7 @@ export default function LandingPage() {
               Get Started
             </Link>
             <Link 
-              href="https://github.com/your-username/your-repo" 
+              href="https://github.com/lbm-realty/Clinical-Records--Mock" 
               className="px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-xl font-bold text-center hover:bg-slate-50 transition-all"
             >
               View Documentation

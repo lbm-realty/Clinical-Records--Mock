@@ -13,6 +13,7 @@ export default function AuthPage() {
   const router = useRouter();
   const [mode, setMode] = useState<AuthMode>('login');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState('');
   
   // Form State
   const [email, setEmail] = useState('');
@@ -47,6 +48,8 @@ export default function AuthPage() {
           role: role,
           createdAt: new Date().toISOString()
         });
+
+        setSuccess("Account created successfully. Please login to continue");
       } else {
 
         if (mode === 'login') {
@@ -106,6 +109,7 @@ export default function AuthPage() {
         </p>
 
         {error && <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-4">{error}</div>}
+        {success && <div className="bg-green-50 text-green-600 p-3 rounded-lg text-sm mb-4">{success}</div>}
 
         <form onSubmit={handleAuth} className="space-y-4">
           {mode === 'signup' && (
