@@ -1,20 +1,19 @@
 # Follow-Up Adherence & Side-Effect Tracker
 
-A tiny, focused telehealth tool for tracking how patients are doing *between* visits: cravings, withdrawal symptoms, side effects, and missed doses. Built to mirror a real workflow a clinician at Ophelia might use to triage patients after check-ins. [web:22][web:24][web:30][web:32]
-
+A tiny, focused telehealth tool for tracking how patients are doing *between* visits: cravings, withdrawal symptoms, side effects, and missed doses. Built to mirror a real workflow a clinician at Ophelia might use to triage patients after check-ins. 
 ---
 
 ## 1. Problem
 
-Patients in treatment for opioid use disorder have a lot happening between visits: cravings, withdrawal, side effects, and life issues that can affect whether they take their meds or drop out of care. [web:22][web:29][web:30]
+Patients in treatment for opioid use disorder have a lot happening between visits: cravings, withdrawal, side effects, and life issues that can affect whether they take their meds or drop out of care.
 
 Clinicians need a simple way to:
 
 - See who is struggling **right now**
 - Catch missed doses and severe symptoms early
-- Focus their time on the **highest-risk** patients first [web:22][web:29]
+- Focus their time on the **highest-risk** patients first 
 
-Most generic dashboards don’t reflect this reality. They show data, but don’t help answer the key question: *“Who should I reach out to first today?”* [web:22][web:30]
+Most generic dashboards don’t reflect this reality. They show data, but don’t help answer the key question: *“Who should I reach out to first today?”* 
 
 ---
 
@@ -50,9 +49,8 @@ This project is a small, opinionated slice of that workflow:
   - Notes
   - A short explanation of **why** the check-in was flagged as High/Medium risk
 
-The goal isn’t to be a full EHR or full Ophelia clone. It’s a focused MVP to show:
-
-- I understand the workflows around telehealth OUD follow-up and retention
+The goal of this project is to show:
+- I understand the workflows around telehealth follow-up and retention
 - I can scope and ship a real product slice end-to-end, not just a generic CRUD app [web:22][web:24][web:30][web:32]
 
 ---
@@ -81,7 +79,7 @@ These reasons are shown on the clinician detail page so it’s clear why a check
 
 ## 4. Tech Stack
 
-This project is aligned with Ophelia’s stack for the Software Engineer I role. [web:24][web:26][web:31][web:32]
+This project is aligned with YouShift’s stack for the Full Stack Engineering  role. 
 
 - **Frontend:** Next.js (App Router), React, TypeScript
 - **Auth:** Firebase Authentication (email/password)
@@ -118,18 +116,14 @@ This is intentionally a small, weekend-sized MVP focused on one critical workflo
 
 If I extend this, I’d like to explore:
 
-Longitudinal trends for each patient (cravings and adherence over time)
-
 Better role-based access control and stricter Firestore security rules
-
-Simple “reach out” workflows for clinicians (documenting calls, messages, or follow-up actions)
 
 More nuanced scoring aligned with clinical guidelines
 
 For now, the goal was to ship a clear, working slice that shows:
 
-Strong alignment with Ophelia’s tech stack
+Strong alignment with YouShift’s tech stack
 
-Product thinking around telehealth OUD workflows
+Product thinking around telehealth workflows
 
-Ability to independently design, build, and deploy an MVP end-to-end [web:22][web:24][web:30][web:32]
+Ability to independently design, build, and deploy an MVP end-to-end
