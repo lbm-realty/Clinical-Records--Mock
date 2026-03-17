@@ -1,6 +1,6 @@
 # Follow-Up Adherence & Side-Effect Tracker
 
-A tiny, focused telehealth tool for tracking how patients are doing *between* visits: cravings, withdrawal symptoms, side effects, and missed doses. Built to mirror a real workflow a clinician at Ophelia might use to triage patients after check-ins. 
+A tiny, focused telehealth tool for tracking how patients are doing *between* visits: cravings, withdrawal symptoms, side effects, and missed doses. Built to mirror a real workflow a clinician might use to triage patients after check-ins. 
 ---
 
 ## 1. Problem
@@ -51,7 +51,7 @@ This project is a small, opinionated slice of that workflow:
 
 The goal of this project is to show:
 - I understand the workflows around telehealth follow-up and retention
-- I can scope and ship a real product slice end-to-end, not just a generic CRUD app [web:22][web:24][web:30][web:32]
+- I can scope and ship a real product slice end-to-end, not just a generic CRUD app.
 
 ---
 
@@ -106,7 +106,7 @@ Project structure (high-level):
 
 ## 5. Future Ideas and What's not included
 
-This is intentionally a small, weekend-sized MVP focused on one critical workflow: follow-up adherence and side-effect tracking in telehealth OUD care. [web:22][web:29]
+This is intentionally a small, weekend-sized MVP focused on one critical workflow: follow-up adherence and side-effect tracking in telehealth OUD care.
 
 #What's not included:
   - Email verification for general users
